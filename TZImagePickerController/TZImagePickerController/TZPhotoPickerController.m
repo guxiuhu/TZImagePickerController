@@ -15,6 +15,7 @@
 #import "TZImageManager.h"
 #import "TZVideoPlayerController.h"
 #import "TZGifPhotoPreviewController.h"
+#import "Masonry.h"
 
 @interface TZPhotoPickerController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate> {
     NSMutableArray *_models;
@@ -120,19 +121,7 @@ static CGSize AssetGridThumbnailSize;
     layout.minimumInteritemSpacing = margin;
     layout.minimumLineSpacing = margin;
     
-    CGFloat top = 0;
-    CGFloat collectionViewHeight = 0;
-    if (self.navigationController.navigationBar.isTranslucent) {
-        top = 44;
-        if (iOS7Later) top += 20;
-        collectionViewHeight = tzImagePickerVc.showSelectBtn ? self.view.tz_height - 50 - top : self.view.tz_height - top;;
-    } else {
-        CGFloat navigationHeight = 44;
-        if (iOS7Later) navigationHeight += 20;
-        collectionViewHeight = tzImagePickerVc.showSelectBtn ? self.view.tz_height - 50 - navigationHeight : self.view.tz_height - navigationHeight;
-    }
-
-    _collectionView = [[TZCollectionView alloc] initWithFrame:CGRectMake(0, top, self.view.tz_width, collectionViewHeight) collectionViewLayout:layout];
+    _collectionView = [[TZCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
@@ -147,6 +136,13 @@ static CGSize AssetGridThumbnailSize;
     [self.view addSubview:_collectionView];
     [_collectionView registerClass:[TZAssetCell class] forCellWithReuseIdentifier:@"TZAssetCell"];
     [_collectionView registerClass:[TZAssetCameraCell class] forCellWithReuseIdentifier:@"TZAssetCameraCell"];
+    
+    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.and.right.equalTo(self.view);
+        make.top.equalTo(self.mas_topLayoutGuideBottom);
+        make.bottom.equalTo(self.view).with.offset(tzImagePickerVc.showSelectBtn?-50:0);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -172,16 +168,7 @@ static CGSize AssetGridThumbnailSize;
     TZImagePickerController *tzImagePickerVc = (TZImagePickerController *)self.navigationController;
     if (!tzImagePickerVc.showSelectBtn) return;
     
-    CGFloat yOffset = 0;
-    if (self.navigationController.navigationBar.isTranslucent) {
-        yOffset = self.view.tz_height - 50;
-    } else {
-        CGFloat navigationHeight = 44;
-        if (iOS7Later) navigationHeight += 20;
-        yOffset = self.view.tz_height - 50 - navigationHeight;
-    }
-    
-    UIView *bottomToolBar = [[UIView alloc] initWithFrame:CGRectMake(0, yOffset, self.view.tz_width, 50)];
+    UIView *bottomToolBar = [[UIView alloc] initWithFrame:CGRectZero];
     CGFloat rgb = 253 / 255.0;
     bottomToolBar.backgroundColor = [UIColor colorWithRed:rgb green:rgb blue:rgb alpha:1.0];
     
@@ -190,8 +177,6 @@ static CGSize AssetGridThumbnailSize;
         previewWidth = 0.0;
     }
     _previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _previewButton.frame = CGRectMake(10, 3, previewWidth, 44);
-    _previewButton.tz_width = !tzImagePickerVc.showSelectBtn ? 0 : previewWidth;
     [_previewButton addTarget:self action:@selector(previewButtonClick) forControlEvents:UIControlEventTouchUpInside];
     _previewButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_previewButton setTitle:tzImagePickerVc.previewBtnTitleStr forState:UIControlStateNormal];
@@ -200,32 +185,7 @@ static CGSize AssetGridThumbnailSize;
     [_previewButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     _previewButton.enabled = tzImagePickerVc.selectedModels.count;
     
-    if (tzImagePickerVc.allowPickingOriginalPhoto) {
-        CGFloat fullImageWidth = [tzImagePickerVc.fullImageBtnTitleStr boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.width;
-        _originalPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _originalPhotoButton.frame = CGRectMake(CGRectGetMaxX(_previewButton.frame), self.view.tz_height - 50, fullImageWidth + 56, 50);
-        _originalPhotoButton.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
-        [_originalPhotoButton addTarget:self action:@selector(originalPhotoButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        _originalPhotoButton.titleLabel.font = [UIFont systemFontOfSize:16];
-        [_originalPhotoButton setTitle:tzImagePickerVc.fullImageBtnTitleStr forState:UIControlStateNormal];
-        [_originalPhotoButton setTitle:tzImagePickerVc.fullImageBtnTitleStr forState:UIControlStateSelected];
-        [_originalPhotoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [_originalPhotoButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-        [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:tzImagePickerVc.photoOriginDefImageName] forState:UIControlStateNormal];
-        [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:tzImagePickerVc.photoOriginSelImageName] forState:UIControlStateSelected];
-        _originalPhotoButton.selected = _isSelectOriginalPhoto;
-        _originalPhotoButton.enabled = tzImagePickerVc.selectedModels.count > 0;
-        
-        _originalPhotoLabel = [[UILabel alloc] init];
-        _originalPhotoLabel.frame = CGRectMake(fullImageWidth + 46, 0, 80, 50);
-        _originalPhotoLabel.textAlignment = NSTextAlignmentLeft;
-        _originalPhotoLabel.font = [UIFont systemFontOfSize:16];
-        _originalPhotoLabel.textColor = [UIColor blackColor];
-        if (_isSelectOriginalPhoto) [self getSelectedPhotoBytes];
-    }
-    
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneButton.frame = CGRectMake(self.view.tz_width - 44 - 12, 3, 44, 44);
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_doneButton addTarget:self action:@selector(doneButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [_doneButton setTitle:tzImagePickerVc.doneBtnTitleStr forState:UIControlStateNormal];
@@ -235,7 +195,6 @@ static CGSize AssetGridThumbnailSize;
     _doneButton.enabled = tzImagePickerVc.selectedModels.count || tzImagePickerVc.alwaysEnableDoneBtn;
     
     _numberImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedFromMyBundle:tzImagePickerVc.photoNumberIconImageName]];
-    _numberImageView.frame = CGRectMake(self.view.tz_width - 56 - 28, 10, 30, 30);
     _numberImageView.hidden = tzImagePickerVc.selectedModels.count <= 0;
     _numberImageView.backgroundColor = [UIColor clearColor];
     
@@ -251,16 +210,91 @@ static CGSize AssetGridThumbnailSize;
     UIView *divide = [[UIView alloc] init];
     CGFloat rgb2 = 222 / 255.0;
     divide.backgroundColor = [UIColor colorWithRed:rgb2 green:rgb2 blue:rgb2 alpha:1.0];
-    divide.frame = CGRectMake(0, 0, self.view.tz_width, 1);
-
     [bottomToolBar addSubview:divide];
+    [divide mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+        make.height.mas_equalTo(1);
+        make.left.and.right.and.top.equalTo(bottomToolBar);
+    }];
+    
     [bottomToolBar addSubview:_previewButton];
+    [_previewButton mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(bottomToolBar).with.offset(10);
+        make.centerY.equalTo(bottomToolBar);
+        make.width.mas_equalTo(!tzImagePickerVc.showSelectBtn ? 0 : previewWidth);
+        make.height.mas_equalTo(44);
+    }];
+    
     [bottomToolBar addSubview:_doneButton];
+    [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.width.and.height.mas_equalTo(44);
+        make.right.equalTo(bottomToolBar).with.offset(-12);
+        make.centerY.equalTo(bottomToolBar);
+    }];
+    
     [bottomToolBar addSubview:_numberImageView];
+    [_numberImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+        make.width.and.height.mas_equalTo(30);
+        make.centerY.equalTo(bottomToolBar);
+        make.right.equalTo(bottomToolBar.mas_right).with.offset(-56-28);
+    }];
+    
     [bottomToolBar addSubview:_numberLabel];
+    [_numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.width.and.height.mas_equalTo(30);
+        make.centerY.equalTo(bottomToolBar);
+        make.right.equalTo(bottomToolBar.mas_right).with.offset(-56-28);
+    }];
+
     [self.view addSubview:bottomToolBar];
-    [self.view addSubview:_originalPhotoButton];
-    [_originalPhotoButton addSubview:_originalPhotoLabel];
+    [bottomToolBar mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.and.right.and.bottom.equalTo(self.view);
+        make.height.mas_equalTo(50);
+    }];
+    
+    if (tzImagePickerVc.allowPickingOriginalPhoto) {
+        CGFloat fullImageWidth = [tzImagePickerVc.fullImageBtnTitleStr boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.width;
+        _originalPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _originalPhotoButton.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+        [_originalPhotoButton addTarget:self action:@selector(originalPhotoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        _originalPhotoButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_originalPhotoButton setTitle:tzImagePickerVc.fullImageBtnTitleStr forState:UIControlStateNormal];
+        [_originalPhotoButton setTitle:tzImagePickerVc.fullImageBtnTitleStr forState:UIControlStateSelected];
+        [_originalPhotoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [_originalPhotoButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+        [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:tzImagePickerVc.photoOriginDefImageName] forState:UIControlStateNormal];
+        [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:tzImagePickerVc.photoOriginSelImageName] forState:UIControlStateSelected];
+        _originalPhotoButton.selected = _isSelectOriginalPhoto;
+        _originalPhotoButton.enabled = tzImagePickerVc.selectedModels.count > 0;
+        [self.view addSubview:_originalPhotoButton];
+        [_originalPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+           
+            make.height.mas_equalTo(50);
+            make.width.mas_equalTo(fullImageWidth + 56);
+            make.bottom.equalTo(self.view);
+            make.left.equalTo(_previewButton.mas_right);
+        }];
+        
+        _originalPhotoLabel = [[UILabel alloc] init];
+        _originalPhotoLabel.textAlignment = NSTextAlignmentLeft;
+        _originalPhotoLabel.font = [UIFont systemFontOfSize:16];
+        _originalPhotoLabel.textColor = [UIColor blackColor];
+        if (_isSelectOriginalPhoto) [self getSelectedPhotoBytes];
+        [_originalPhotoButton addSubview:_originalPhotoLabel];
+        [_originalPhotoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.height.mas_equalTo(50);
+            make.width.mas_equalTo(80);
+            make.centerY.equalTo(_originalPhotoButton);
+            make.left.equalTo(_originalPhotoButton).with.offset(fullImageWidth + 46);
+        }];
+    }
+
 }
 
 #pragma mark - Click Event

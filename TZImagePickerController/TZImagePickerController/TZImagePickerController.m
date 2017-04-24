@@ -13,6 +13,7 @@
 #import "TZAssetCell.h"
 #import "UIView+Layout.h"
 #import "TZImageManager.h"
+#import "Masonry.h"
 
 @interface TZImagePickerController () {
     NSTimer *_timer;
@@ -463,10 +464,6 @@
     [super pushViewController:viewController animated:animated];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
 - (void)dealloc {
     // NSLog(@"%@ dealloc",NSStringFromClass(self.class));
 }
@@ -548,25 +545,19 @@
         }
         if (!_tableView) {
             
-            CGFloat top = 0;
-            CGFloat tableViewHeight = 0;
-            if (self.navigationController.navigationBar.isTranslucent) {
-                top = 44;
-                if (iOS7Later) top += 20;
-                tableViewHeight = self.view.tz_height - top;
-            } else {
-                CGFloat navigationHeight = 44;
-                if (iOS7Later) navigationHeight += 20;
-                tableViewHeight = self.view.tz_height - navigationHeight;
-            }
-
-            _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, top, self.view.tz_width, tableViewHeight) style:UITableViewStylePlain];
+            _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
             _tableView.rowHeight = 70;
             _tableView.tableFooterView = [[UIView alloc] init];
             _tableView.dataSource = self;
             _tableView.delegate = self;
             [_tableView registerClass:[TZAlbumCell class] forCellReuseIdentifier:@"TZAlbumCell"];
             [self.view addSubview:_tableView];
+            [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+               
+                make.left.and.right.and.bottom.equalTo(self.view);
+                make.top.equalTo(self.mas_topLayoutGuideBottom);
+            }];
+            
         } else {
             [_tableView reloadData];
         }

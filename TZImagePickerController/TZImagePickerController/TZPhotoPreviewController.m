@@ -13,6 +13,7 @@
 #import "TZImagePickerController.h"
 #import "TZImageManager.h"
 #import "TZImageCropManager.h"
+#import "Masonry.h"
 
 @interface TZPhotoPreviewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIScrollViewDelegate> {
     UICollectionView *_collectionView;
@@ -83,35 +84,98 @@
 - (void)configCustomNaviBar {
     TZImagePickerController *tzImagePickerVc = (TZImagePickerController *)self.navigationController;
 
-    _naviBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.tz_width, 64)];
+    _naviBar = [[UIView alloc] initWithFrame:CGRectZero];
     _naviBar.backgroundColor = [UIColor colorWithRed:(34/255.0) green:(34/255.0)  blue:(34/255.0) alpha:0.7];
     
-    _backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
+    _backButton = [[UIButton alloc] initWithFrame:CGRectZero];
     [_backButton setImage:[UIImage imageNamedFromMyBundle:@"navi_back.png"] forState:UIControlStateNormal];
     [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_backButton addTarget:self action:@selector(backButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    _selectButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.tz_width - 54, 10, 42, 42)];
+    _selectButton = [[UIButton alloc] initWithFrame:CGRectZero];
     [_selectButton setImage:[UIImage imageNamedFromMyBundle:tzImagePickerVc.photoDefImageName] forState:UIControlStateNormal];
     [_selectButton setImage:[UIImage imageNamedFromMyBundle:tzImagePickerVc.photoSelImageName] forState:UIControlStateSelected];
     [_selectButton addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
     _selectButton.hidden = !tzImagePickerVc.showSelectBtn;
     
     [_naviBar addSubview:_selectButton];
+    [_selectButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.and.width.mas_equalTo(42);
+        make.centerY.equalTo(_naviBar);
+        make.right.equalTo(_naviBar).with.offset(-12);
+    }];
+    
     [_naviBar addSubview:_backButton];
+    [_backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.top.equalTo(_naviBar).with.offset(10);
+        make.height.and.width.mas_equalTo(44);
+    }];
+    
     [self.view addSubview:_naviBar];
+    [_naviBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.and.right.and.top.equalTo(self.view);
+        make.height.mas_equalTo(64);
+    }];
 }
 
 - (void)configBottomToolBar {
-    _toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.tz_height - 44, self.view.tz_width, 44)];
+    _toolBar = [[UIView alloc] initWithFrame:CGRectZero];
     static CGFloat rgb = 34 / 255.0;
     _toolBar.backgroundColor = [UIColor colorWithRed:rgb green:rgb blue:rgb alpha:0.7];
     
     TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)self.navigationController;
+    
+    _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_doneButton addTarget:self action:@selector(doneButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [_doneButton setTitle:_tzImagePickerVc.doneBtnTitleStr forState:UIControlStateNormal];
+    [_doneButton setTitleColor:_tzImagePickerVc.oKButtonTitleColorNormal forState:UIControlStateNormal];
+    
+    _numberImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedFromMyBundle:_tzImagePickerVc.photoNumberIconImageName]];
+    _numberImageView.backgroundColor = [UIColor clearColor];
+    _numberImageView.hidden = _tzImagePickerVc.selectedModels.count <= 0;
+    
+    _numberLabel = [[UILabel alloc] init];
+    _numberLabel.font = [UIFont systemFontOfSize:15];
+    _numberLabel.textColor = [UIColor whiteColor];
+    _numberLabel.textAlignment = NSTextAlignmentCenter;
+    _numberLabel.text = [NSString stringWithFormat:@"%zd",_tzImagePickerVc.selectedModels.count];
+    _numberLabel.hidden = _tzImagePickerVc.selectedModels.count <= 0;
+    _numberLabel.backgroundColor = [UIColor clearColor];
+
+    [_toolBar addSubview:_doneButton];
+    [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.height.and.width.mas_equalTo(44);
+        make.centerY.equalTo(_toolBar);
+        make.right.equalTo(_toolBar).with.offset(-12);
+    }];
+    
+    [_toolBar addSubview:_numberImageView];
+    [_numberImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.and.width.mas_equalTo(30);
+        make.centerY.equalTo(_toolBar);
+        make.right.equalTo(_toolBar).with.offset(-56-28);
+    }];
+    
+    [_toolBar addSubview:_numberLabel];
+    [_numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.and.width.mas_equalTo(30);
+        make.centerY.equalTo(_toolBar);
+        make.right.equalTo(_toolBar).with.offset(-56-28);
+    }];
+
+    [self.view addSubview:_toolBar];
+    [_toolBar mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.and.right.and.bottom.equalTo(self.view);
+        make.height.mas_equalTo(44);
+    }];
+    
     if (_tzImagePickerVc.allowPickingOriginalPhoto) {
         CGFloat fullImageWidth = [_tzImagePickerVc.fullImageBtnTitleStr boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size.width;
         _originalPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _originalPhotoButton.frame = CGRectMake(0, 0, fullImageWidth + 56, 44);
         _originalPhotoButton.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
         _originalPhotoButton.backgroundColor = [UIColor clearColor];
         [_originalPhotoButton addTarget:self action:@selector(originalPhotoButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -122,52 +186,37 @@
         [_originalPhotoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:_tzImagePickerVc.photoPreviewOriginDefImageName] forState:UIControlStateNormal];
         [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:_tzImagePickerVc.photoOriginSelImageName] forState:UIControlStateSelected];
+        [_toolBar addSubview:_originalPhotoButton];
+        [_originalPhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(44);
+            make.width.mas_equalTo(fullImageWidth + 56);
+            make.left.and.top.equalTo(_toolBar);
+        }];
         
         _originalPhotoLabel = [[UILabel alloc] init];
-        _originalPhotoLabel.frame = CGRectMake(fullImageWidth + 42, 0, 80, 44);
         _originalPhotoLabel.textAlignment = NSTextAlignmentLeft;
         _originalPhotoLabel.font = [UIFont systemFontOfSize:13];
         _originalPhotoLabel.textColor = [UIColor whiteColor];
         _originalPhotoLabel.backgroundColor = [UIColor clearColor];
         if (_isSelectOriginalPhoto) [self showPhotoBytes];
+        [_originalPhotoButton addSubview:_originalPhotoLabel];
+        [_originalPhotoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+           
+            make.height.mas_equalTo(44);
+            make.width.mas_equalTo(80);
+            make.centerY.equalTo(_originalPhotoButton);
+            make.left.equalTo(_originalPhotoButton).with.offset(fullImageWidth + 42);
+        }];
     }
-    
-    _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneButton.frame = CGRectMake(self.view.tz_width - 44 - 12, 0, 44, 44);
-    _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_doneButton addTarget:self action:@selector(doneButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [_doneButton setTitle:_tzImagePickerVc.doneBtnTitleStr forState:UIControlStateNormal];
-    [_doneButton setTitleColor:_tzImagePickerVc.oKButtonTitleColorNormal forState:UIControlStateNormal];
-    
-    _numberImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedFromMyBundle:_tzImagePickerVc.photoNumberIconImageName]];
-    _numberImageView.backgroundColor = [UIColor clearColor];
-    _numberImageView.frame = CGRectMake(self.view.tz_width - 56 - 28, 7, 30, 30);
-    _numberImageView.hidden = _tzImagePickerVc.selectedModels.count <= 0;
-    
-    _numberLabel = [[UILabel alloc] init];
-    _numberLabel.frame = _numberImageView.frame;
-    _numberLabel.font = [UIFont systemFontOfSize:15];
-    _numberLabel.textColor = [UIColor whiteColor];
-    _numberLabel.textAlignment = NSTextAlignmentCenter;
-    _numberLabel.text = [NSString stringWithFormat:@"%zd",_tzImagePickerVc.selectedModels.count];
-    _numberLabel.hidden = _tzImagePickerVc.selectedModels.count <= 0;
-    _numberLabel.backgroundColor = [UIColor clearColor];
 
-    [_originalPhotoButton addSubview:_originalPhotoLabel];
-    [_toolBar addSubview:_doneButton];
-    [_toolBar addSubview:_originalPhotoButton];
-    [_toolBar addSubview:_numberImageView];
-    [_toolBar addSubview:_numberLabel];
-    [self.view addSubview:_toolBar];
 }
 
 - (void)configCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.itemSize = CGSizeMake(self.view.tz_width + 20, self.view.tz_height);
     layout.minimumInteritemSpacing = 0;
     layout.minimumLineSpacing = 0;
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(-10, 0, self.view.tz_width + 20, self.view.tz_height) collectionViewLayout:layout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor blackColor];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
@@ -175,12 +224,55 @@
     _collectionView.scrollsToTop = NO;
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.contentOffset = CGPointMake(0, 0);
-    _collectionView.contentSize = CGSizeMake(self.models.count * (self.view.tz_width + 20), 0);
+//    _collectionView.contentSize = CGSizeMake(self.models.count * (self.view.tz_width + 20), 0);
     [self.view addSubview:_collectionView];
     [_collectionView registerClass:[TZPhotoPreviewCell class] forCellWithReuseIdentifier:@"TZPhotoPreviewCell"];
+    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).with.offset(-10);
+        make.right.equalTo(self.view).with.offset(10);
+        make.top.and.bottom.equalTo(self.view);
+    }];
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+    
+    for (UIView *subView in self.view.subviews) {
+        [subView removeFromSuperview];
+    }
+    
+    TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)self.navigationController;
+    _tzImagePickerVc.circleCropRadius = _tzImagePickerVc.circleCropRadius;
+
+    [self configCollectionView];
+    [self configCropView];
+    [self configCustomNaviBar];
+    [self configBottomToolBar];
+    self.view.clipsToBounds = YES;
+}
+
+//设置元素大小
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UIInterfaceOrientation ori = [UIApplication sharedApplication].statusBarOrientation;
+    if (ori == UIDeviceOrientationPortrait || ori == UIDeviceOrientationPortraitUpsideDown) {
+        CGFloat width = ([UIScreen mainScreen].bounds.size.width>[UIScreen mainScreen].bounds.size.height?[UIScreen mainScreen].bounds.size.height:[UIScreen mainScreen].bounds.size.width);
+        CGFloat height = self.view.tz_height;
+        
+        return CGSizeMake(width+ 20, height);
+    }else{
+        CGFloat width = ([UIScreen mainScreen].bounds.size.width>[UIScreen mainScreen].bounds.size.height?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height);
+        
+        CGFloat height = self.view.tz_height;
+
+        return CGSizeMake(width+ 20, height);
+        
+    }
+}
+
+
 - (void)configCropView {
+    
     TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)self.navigationController;
     if (!_tzImagePickerVc.showSelectBtn && _tzImagePickerVc.allowCrop) {
         _cropBgView = [UIView new];

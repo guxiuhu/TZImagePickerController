@@ -521,9 +521,6 @@
     }
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
 #pragma clang diagnostic pop
 
 @end

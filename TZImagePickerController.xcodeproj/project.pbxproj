@@ -31,6 +31,16 @@
 		90CE84AE1C3A89EF003D0779 /* TZImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CE84AD1C3A89EF003D0779 /* TZImageManager.m */; };
 		90CE84B71C3BABB6003D0779 /* TZVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CE84B61C3BABB6003D0779 /* TZVideoPlayerController.m */; };
 		90EBF5D61C2E298000CB9BCC /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EBF5D51C2E298000CB9BCC /* UIView+Layout.m */; };
+		96BFC5761EA9FADF00BE7DFD /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC55E1EA9FADF00BE7DFD /* MASCompositeConstraint.m */; };
+		96BFC5771EA9FADF00BE7DFD /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC5611EA9FADF00BE7DFD /* MASConstraint.m */; };
+		96BFC5781EA9FADF00BE7DFD /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC5631EA9FADF00BE7DFD /* MASConstraintMaker.m */; };
+		96BFC5791EA9FADF00BE7DFD /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC5651EA9FADF00BE7DFD /* MASLayoutConstraint.m */; };
+		96BFC57A1EA9FADF00BE7DFD /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC5691EA9FADF00BE7DFD /* MASViewAttribute.m */; };
+		96BFC57B1EA9FADF00BE7DFD /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC56B1EA9FADF00BE7DFD /* MASViewConstraint.m */; };
+		96BFC57C1EA9FADF00BE7DFD /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC56D1EA9FADF00BE7DFD /* NSArray+MASAdditions.m */; };
+		96BFC57D1EA9FADF00BE7DFD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC5701EA9FADF00BE7DFD /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		96BFC57E1EA9FADF00BE7DFD /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC5721EA9FADF00BE7DFD /* View+MASAdditions.m */; };
+		96BFC57F1EA9FADF00BE7DFD /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BFC5751EA9FADF00BE7DFD /* ViewController+MASAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +110,31 @@
 		90CE84B61C3BABB6003D0779 /* TZVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZVideoPlayerController.m; sourceTree = "<group>"; };
 		90EBF5D41C2E298000CB9BCC /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 		90EBF5D51C2E298000CB9BCC /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		96BFC55D1EA9FADF00BE7DFD /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
+		96BFC55E1EA9FADF00BE7DFD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
+		96BFC55F1EA9FADF00BE7DFD /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
+		96BFC5601EA9FADF00BE7DFD /* MASConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraint.h; sourceTree = "<group>"; };
+		96BFC5611EA9FADF00BE7DFD /* MASConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraint.m; sourceTree = "<group>"; };
+		96BFC5621EA9FADF00BE7DFD /* MASConstraintMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraintMaker.h; sourceTree = "<group>"; };
+		96BFC5631EA9FADF00BE7DFD /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
+		96BFC5641EA9FADF00BE7DFD /* MASLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASLayoutConstraint.h; sourceTree = "<group>"; };
+		96BFC5651EA9FADF00BE7DFD /* MASLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASLayoutConstraint.m; sourceTree = "<group>"; };
+		96BFC5661EA9FADF00BE7DFD /* Masonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Masonry.h; sourceTree = "<group>"; };
+		96BFC5671EA9FADF00BE7DFD /* MASUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASUtilities.h; sourceTree = "<group>"; };
+		96BFC5681EA9FADF00BE7DFD /* MASViewAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewAttribute.h; sourceTree = "<group>"; };
+		96BFC5691EA9FADF00BE7DFD /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		96BFC56A1EA9FADF00BE7DFD /* MASViewConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewConstraint.h; sourceTree = "<group>"; };
+		96BFC56B1EA9FADF00BE7DFD /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
+		96BFC56C1EA9FADF00BE7DFD /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASAdditions.h"; sourceTree = "<group>"; };
+		96BFC56D1EA9FADF00BE7DFD /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MASAdditions.m"; sourceTree = "<group>"; };
+		96BFC56E1EA9FADF00BE7DFD /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		96BFC56F1EA9FADF00BE7DFD /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
+		96BFC5701EA9FADF00BE7DFD /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
+		96BFC5711EA9FADF00BE7DFD /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
+		96BFC5721EA9FADF00BE7DFD /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
+		96BFC5731EA9FADF00BE7DFD /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		96BFC5741EA9FADF00BE7DFD /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
+		96BFC5751EA9FADF00BE7DFD /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +193,7 @@
 		900E657E1C2BB8D5003D9A9E /* TZImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
+				96BFC55C1EA9FADF00BE7DFD /* Masonry */,
 				900EEFF51C2BBF7600EA709B /* TZImagePickerController */,
 				900E65821C2BB8D5003D9A9E /* AppDelegate.h */,
 				900E65831C2BB8D5003D9A9E /* AppDelegate.m */,
@@ -236,6 +272,38 @@
 			path = TZImagePickerController;
 			sourceTree = "<group>";
 		};
+		96BFC55C1EA9FADF00BE7DFD /* Masonry */ = {
+			isa = PBXGroup;
+			children = (
+				96BFC55D1EA9FADF00BE7DFD /* MASCompositeConstraint.h */,
+				96BFC55E1EA9FADF00BE7DFD /* MASCompositeConstraint.m */,
+				96BFC55F1EA9FADF00BE7DFD /* MASConstraint+Private.h */,
+				96BFC5601EA9FADF00BE7DFD /* MASConstraint.h */,
+				96BFC5611EA9FADF00BE7DFD /* MASConstraint.m */,
+				96BFC5621EA9FADF00BE7DFD /* MASConstraintMaker.h */,
+				96BFC5631EA9FADF00BE7DFD /* MASConstraintMaker.m */,
+				96BFC5641EA9FADF00BE7DFD /* MASLayoutConstraint.h */,
+				96BFC5651EA9FADF00BE7DFD /* MASLayoutConstraint.m */,
+				96BFC5661EA9FADF00BE7DFD /* Masonry.h */,
+				96BFC5671EA9FADF00BE7DFD /* MASUtilities.h */,
+				96BFC5681EA9FADF00BE7DFD /* MASViewAttribute.h */,
+				96BFC5691EA9FADF00BE7DFD /* MASViewAttribute.m */,
+				96BFC56A1EA9FADF00BE7DFD /* MASViewConstraint.h */,
+				96BFC56B1EA9FADF00BE7DFD /* MASViewConstraint.m */,
+				96BFC56C1EA9FADF00BE7DFD /* NSArray+MASAdditions.h */,
+				96BFC56D1EA9FADF00BE7DFD /* NSArray+MASAdditions.m */,
+				96BFC56E1EA9FADF00BE7DFD /* NSArray+MASShorthandAdditions.h */,
+				96BFC56F1EA9FADF00BE7DFD /* NSLayoutConstraint+MASDebugAdditions.h */,
+				96BFC5701EA9FADF00BE7DFD /* NSLayoutConstraint+MASDebugAdditions.m */,
+				96BFC5711EA9FADF00BE7DFD /* View+MASAdditions.h */,
+				96BFC5721EA9FADF00BE7DFD /* View+MASAdditions.m */,
+				96BFC5731EA9FADF00BE7DFD /* View+MASShorthandAdditions.h */,
+				96BFC5741EA9FADF00BE7DFD /* ViewController+MASAdditions.h */,
+				96BFC5751EA9FADF00BE7DFD /* ViewController+MASAdditions.m */,
+			);
+			path = Masonry;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -303,8 +371,8 @@
 				TargetAttributes = {
 					900E657B1C2BB8D5003D9A9E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = T86X98NCU2;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 75CW652CU7;
+						ProvisioningStyle = Manual;
 					};
 					900E65941C2BB8D5003D9A9E = {
 						CreatedOnToolsVersion = 7.2;
@@ -373,17 +441,27 @@
 				900EF00F1C2C0B1100EA709B /* TZAssetModel.m in Sources */,
 				900EEFFE1C2BD58B00EA709B /* TZPhotoPickerController.m in Sources */,
 				90EBF5D61C2E298000CB9BCC /* UIView+Layout.m in Sources */,
+				96BFC5771EA9FADF00BE7DFD /* MASConstraint.m in Sources */,
+				96BFC57A1EA9FADF00BE7DFD /* MASViewAttribute.m in Sources */,
 				90CE84B71C3BABB6003D0779 /* TZVideoPlayerController.m in Sources */,
+				96BFC5761EA9FADF00BE7DFD /* MASCompositeConstraint.m in Sources */,
+				96BFC57E1EA9FADF00BE7DFD /* View+MASAdditions.m in Sources */,
 				900EF0021C2BD7E400EA709B /* TZAssetCell.m in Sources */,
 				6DD0502B1DF659ED0057C78D /* TZProgressView.m in Sources */,
 				6D32B9BD1CD83640005CE1E0 /* LxGridViewFlowLayout.m in Sources */,
 				6D4608311DFFC60D004FB009 /* TZGifPhotoPreviewController.m in Sources */,
+				96BFC57C1EA9FADF00BE7DFD /* NSArray+MASAdditions.m in Sources */,
+				96BFC57D1EA9FADF00BE7DFD /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				900EF0161C2C134900EA709B /* TZPhotoPreviewCell.m in Sources */,
 				900E65871C2BB8D5003D9A9E /* ViewController.m in Sources */,
 				90CE84AE1C3A89EF003D0779 /* TZImageManager.m in Sources */,
+				96BFC57F1EA9FADF00BE7DFD /* ViewController+MASAdditions.m in Sources */,
+				96BFC57B1EA9FADF00BE7DFD /* MASViewConstraint.m in Sources */,
+				96BFC5781EA9FADF00BE7DFD /* MASConstraintMaker.m in Sources */,
 				900E65841C2BB8D5003D9A9E /* AppDelegate.m in Sources */,
 				900E65811C2BB8D5003D9A9E /* main.m in Sources */,
 				900EF0121C2C107400EA709B /* TZPhotoPreviewController.m in Sources */,
+				96BFC5791EA9FADF00BE7DFD /* MASLayoutConstraint.m in Sources */,
 				6D5358CD1D64600F00928CC6 /* NSBundle+TZImagePicker.m in Sources */,
 				900EEFF81C2BBF9500EA709B /* TZImagePickerController.m in Sources */,
 				6DC84D0A1DF5358500A107A9 /* TZImageCropManager.m in Sources */,
@@ -529,17 +607,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T86X98NCU2;
+				DEVELOPMENT_TEAM = 75CW652CU7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
 				);
 				INFOPLIST_FILE = TZImagePickerController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tanzhen.TZImagePickerController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5d149007-5875-4e80-b87a-73dec8b97b21";
+				PROVISIONING_PROFILE_SPECIFIER = ntdevelop;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -550,17 +629,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = T86X98NCU2;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
 				);
 				INFOPLIST_FILE = TZImagePickerController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tanzhen.TZImagePickerController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

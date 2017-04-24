@@ -12,6 +12,7 @@
 #import "TZImageManager.h"
 #import "TZProgressView.h"
 #import "TZImageCropManager.h"
+#import "Masonry.h"
 
 @interface TZPhotoPreviewCell ()
 @end
@@ -71,7 +72,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _scrollView = [[UIScrollView alloc] init];
-        _scrollView.frame = CGRectMake(10, 0, self.tz_width - 20, self.tz_height);
         _scrollView.bouncesZoom = YES;
         _scrollView.maximumZoomScale = 2.5;
         _scrollView.minimumZoomScale = 1.0;
@@ -85,6 +85,12 @@
         _scrollView.canCancelContentTouches = YES;
         _scrollView.alwaysBounceVertical = NO;
         [self addSubview:_scrollView];
+        [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+           
+            make.left.equalTo(self).with.offset(10);
+            make.right.equalTo(self).with.offset(-10);
+            make.top.and.bottom.equalTo(self);
+        }];
         
         _imageContainerView = [[UIView alloc] init];
         _imageContainerView.clipsToBounds = YES;
