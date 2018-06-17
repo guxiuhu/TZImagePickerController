@@ -43,7 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [TZImageManager manager].shouldFixOrientation = YES;
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)weakSelf.navigationController;
     if (!self.models.count) {
         self.models = [NSMutableArray arrayWithArray:_tzImagePickerVc.selectedModels];
@@ -224,7 +224,7 @@
     _collectionView.scrollsToTop = NO;
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.contentOffset = CGPointMake(0, 0);
-//    _collectionView.contentSize = CGSizeMake(self.models.count * (self.view.tz_width + 20), 0);
+    _collectionView.contentSize = CGSizeMake(self.models.count * (self.view.tz_width + 20), 0);
     [self.view addSubview:_collectionView];
     [_collectionView registerClass:[TZPhotoPreviewCell class] forCellWithReuseIdentifier:@"TZPhotoPreviewCell"];
     [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -444,10 +444,10 @@
     TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)self.navigationController;
     cell.cropRect = _tzImagePickerVc.cropRect;
     cell.allowCrop = _tzImagePickerVc.allowCrop;
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     if (!cell.singleTapGestureBlock) {
-        __weak typeof(_naviBar) weakNaviBar = _naviBar;
-        __weak typeof(_toolBar) weakToolBar = _toolBar;
+        __weak __typeof(_naviBar) weakNaviBar = _naviBar;
+        __weak __typeof(_toolBar) weakToolBar = _toolBar;
         cell.singleTapGestureBlock = ^(){
             // show or hide naviBar / 显示或隐藏导航栏
             weakSelf.isHideNaviBar = !weakSelf.isHideNaviBar;

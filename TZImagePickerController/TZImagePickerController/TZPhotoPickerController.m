@@ -425,9 +425,9 @@ static CGSize AssetGridThumbnailSize;
         cell.selectPhotoButton.frame = cell.bounds;
     }
     
-    __weak typeof(cell) weakCell = cell;
-    __weak typeof(self) weakSelf = self;
-    __weak typeof(_numberImageView.layer) weakLayer = _numberImageView.layer;
+    __weak __typeof(cell) weakCell = cell;
+    __weak __typeof(self) weakSelf = self;
+    __weak __typeof(_numberImageView.layer) weakLayer = _numberImageView.layer;
     cell.didSelectPhotoBlock = ^(BOOL isSelected) {
         TZImagePickerController *tzImagePickerVc = (TZImagePickerController *)weakSelf.navigationController;
         // 1. cancel select / 取消选择
@@ -547,7 +547,7 @@ static CGSize AssetGridThumbnailSize;
 }
 
 - (void)pushPhotoPrevireViewController:(TZPhotoPreviewController *)photoPreviewVc {
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     photoPreviewVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
     [photoPreviewVc setBackButtonClickBlock:^(BOOL isSelectOriginalPhoto) {
         weakSelf.isSelectOriginalPhoto = isSelectOriginalPhoto;

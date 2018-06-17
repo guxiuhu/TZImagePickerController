@@ -52,7 +52,7 @@
     _previewView = [[TZPhotoPreviewView alloc] initWithFrame:self.view.bounds];
     _previewView.scrollView.frame = self.view.bounds;
     _previewView.model = self.model;
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [_previewView setSingleTapGestureBlock:^{
         [weakSelf signleTapAction];
     }];

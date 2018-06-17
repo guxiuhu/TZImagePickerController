@@ -182,7 +182,7 @@
 
         previewVc.photos = [NSMutableArray arrayWithArray:selectedPhotos];
         previewVc.currentIndex = index;
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self) weakSelf = self;
         [previewVc setDoneButtonClickBlockWithPreviewType:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
             [weakSelf dismissViewControllerAnimated:YES completion:^{
                 if (weakSelf.didFinishPickingPhotosHandle) {
@@ -207,7 +207,7 @@
         previewVc.photos = [NSMutableArray arrayWithArray:@[photo]];
         previewVc.isCropImage = YES;
         previewVc.currentIndex = 0;
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self) weakSelf = self;
         [previewVc setDoneButtonClickBlockCropMode:^(UIImage *cropImage, id asset) {
             [weakSelf dismissViewControllerAnimated:YES completion:^{
                 if (completion) {
@@ -317,7 +317,7 @@
     [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
     
     // if over time, dismiss HUD automatic
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf hideProgressHUD];
     });
@@ -588,7 +588,7 @@
     photoPickerVc.columnNumber = self.columnNumber;
     TZAlbumModel *model = _albumArr[indexPath.row];
     photoPickerVc.model = model;
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [photoPickerVc setBackButtonClickHandle:^(TZAlbumModel *model) {
         [weakSelf.albumArr replaceObjectAtIndex:indexPath.row withObject:model];
     }];

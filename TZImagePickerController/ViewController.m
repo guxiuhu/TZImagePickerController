@@ -254,6 +254,25 @@
     // 你可以通过block或者代理，来得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         
+        for (id asset in assets) {
+            [[PHImageManager defaultManager] requestImageDataForAsset:asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                
+                UIImage *image = [UIImage imageWithData:imageData];
+                NSData *    imageData1 = UIImageJPEGRepresentation(image, 1);
+                NSLog(@"++++++++++++++++++++++++%f",imageData1.length);
+                NSData *    imageData2 = UIImagePNGRepresentation(image);
+                NSLog(@"++++++++++++++++++++++++%f",imageData2.length);
+                
+            }];
+
+            [[TZImageManager manager] getOriginalPhotoWithAsset:asset completion:^(UIImage *photo, NSDictionary *info) {
+                
+                
+                NSData *imageData = UIImageJPEGRepresentation(photo, 1);
+                imageData = UIImagePNGRepresentation(photo);
+                NSLog(@"++++++++++++++++++++++++%f",imageData.length);
+            }];
+        }
     }];
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];
@@ -517,7 +536,7 @@
             ALAsset *alAsset = (ALAsset *)asset;
             fileName = alAsset.defaultRepresentation.filename;;
         }
-        //NSLog(@"图片名字:%@",fileName);
+        NSLog(@"图片名字:%@",fileName);
     }
 }
 

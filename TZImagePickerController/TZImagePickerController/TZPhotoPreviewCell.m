@@ -24,7 +24,7 @@
     if (self) {
         self.backgroundColor = [UIColor blackColor];
         self.previewView = [[TZPhotoPreviewView alloc] initWithFrame:self.bounds];
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self) weakSelf = self;
         [self.previewView setSingleTapGestureBlock:^{
             if (weakSelf.singleTapGestureBlock) {
                 weakSelf.singleTapGestureBlock();
